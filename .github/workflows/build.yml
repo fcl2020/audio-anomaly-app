@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4      # 也更新到 v4
 
     - name: Install dependencies
       run: |
@@ -22,7 +22,7 @@ jobs:
       run: buildozer android debug
 
     - name: Upload APK
-      uses: actions/upload-artifact@v4   # ← 关键：v3 → v4
+      uses: actions/upload-artifact@v4
       with:
         name: audio-anomaly-apk
         path: bin/*.apk
