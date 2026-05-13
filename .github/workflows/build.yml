@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y python3-pip
+        sudo apt-get install -y python3-pip autoconf automake libtool pkg-config
         pip3 install buildozer cython
 
     - name: Build APK
