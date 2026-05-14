@@ -1,4 +1,4 @@
-name: Build Android APK (Docker Fixed)
+name: Build Android APK
 
 on:
   push:
@@ -12,31 +12,37 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
-    - name: Build APK in Buildozer Docker
-      uses: addnab/docker-run-action@v3
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
       with:
-        image: kivy/buildozer:latest
-        options: -v ${{ github.workspace }}:/home/user/hostcwd -w /home/user/hostcwd
-        run: |
-          # 1. 安装 Python 3.12（deadsnakes PPA）
-          add-apt-repository ppa:deadsnakes/ppa -y
-          apt-get update
-          apt-get install -y python3.12 python3.12-venv python3.12-dev
+        python-version: '3.12'
 
-          # 2. 用 Python 3.12 创建独立虚拟环境
-          python3.12 -m venv /opt/py312
-          source /opt/py312/bin/activate
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
-          # 3. 在新环境中安装 buildozer
-          pip install --upgrade pip
-          pip install buildozer cython
+    - name: Install ALL system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          autoconf automake libtool pkg-config \
+          zip unzip zlib1g-dev libncurses5-dev \
+          g++ gcc gfortran libopenblas-dev liblapack-dev \
+          libffi-dev libssl-dev libbz2-dev libreadline-dev \
+          libsqlite3-dev liblzma-dev tk-dev
 
-          # 4. 确认版本
-          python --version
+    - name: Install buildozer and cython
+      run: |
+        python3 -m pip install --upgrade pip setuptools
+        pip3 install buildozer cython
 
-          # 5. 执行构建
-          cd /home/user/hostcwd
-          yes | buildozer android debug
+    - name: Verify Python version
+      run: python3 --version
+
+    - name: Build APK
+      run: buildozer android debug
 
     - name: Upload APK
       uses: actions/upload-artifact@v7
