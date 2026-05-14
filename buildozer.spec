@@ -7,8 +7,8 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 version = 1.0.0
 
-# 关键：用 python3==3.11.x，锁定版本
-requirements = python3==3.11.9,kivy,numpy
+# 关键修改：同时指定 hostpython3 和 python3 为同一版本
+requirements = hostpython3==3.11.9,python3==3.11.9,kivy,numpy
 
 orientation = portrait
 fullscreen = 1
@@ -25,6 +25,7 @@ android.accept_sdk_license = True
 
 log_level = 2
 warn_on_root = 1
+
 
 
 
