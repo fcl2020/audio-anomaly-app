@@ -6,10 +6,7 @@ package.domain = org.audioanomaly
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 version = 1.0.0
-
-# 关键改动：python3 不锁版本，自动与 host Python 一致
 requirements = python3,kivy,numpy
-
 orientation = portrait
 fullscreen = 1
 android.permissions = INTERNET,READ_EXTERNAL_STORAGE
