@@ -23,6 +23,34 @@ from kivy.clock import Clock
 
 # ============ 核心算法（与原版相同）============
 
+import kivy
+from kivy.app import App
+from kivy.uix.label import Label
+
+class TestApp(App):
+    def build(self):
+        try:
+            import numpy
+            msg = f"numpy OK ({numpy.__version__})"
+        except Exception as e:
+            msg = f"numpy FAIL: {e}"
+        
+        try:
+            import scipy
+            msg += f"\nscipy OK ({scipy.__version__})"
+        except Exception as e:
+            msg += f"\nscipy FAIL: {e}"
+        
+        try:
+            import pywt
+            msg += f"\npywt OK ({pywt.__version__})"
+        except Exception as e:
+            msg += f"\npywt FAIL: {e}"
+        
+        return Label(text=msg, font_size='14sp')
+
+TestApp().run()
+
 class AudioPreprocessor:
     @staticmethod
     def denoise(y, sr, method='spectral_gating', **kw):
