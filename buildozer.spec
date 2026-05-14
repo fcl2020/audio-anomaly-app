@@ -7,14 +7,13 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 version = 1.0.0
 
-# 关键：锁定版本号，避免兼容性问题
-requirements = python3==3.12.8,kivy==2.3.0,numpy==1.26.4,Cython==3.0.11
+# 关键改动：python3 不锁版本，自动与 host Python 一致
+requirements = python3,kivy,numpy
 
 orientation = portrait
 fullscreen = 1
 android.permissions = INTERNET,READ_EXTERNAL_STORAGE
 
-# numpy 要求 minapi >= 24
 android.api = 31
 android.minapi = 24
 android.ndk = 25b
